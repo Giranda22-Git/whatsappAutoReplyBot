@@ -10,7 +10,12 @@ const fs = require('fs').promises
 
 router.get('/', async (req, res) => {
   const client = new Client({
-    authStrategy: new LocalAuth()
+    authStrategy: new LocalAuth(),
+    puppeteer: {
+      executablePath: '/usr/bin/chromium-browser',
+      ignoreDefaultArgs: ['--disable-extensions'],
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    }
   });
 
   client.on('qr', async (qr) => {
